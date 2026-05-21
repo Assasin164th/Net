@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+actor "Менеджер" as M
+actor "Бухгалтер" as B
+actor "Турист" as T
+
+usecase "Формирование тура" as UC1
+usecase "Создание группы" as UC2
+usecase "Бронирование путевки" as UC3
+usecase "Просмотр ведомости" as UC4
+usecase "Оплата билета" as UC5
+usecase "Выбор тура" as UC6
+
+M --> UC1
+M --> UC2
+M --> UC3
+B --> UC4
+B --> UC3
+T --> UC6
+T --> UC5
+UC3 ..> UC5 : <<include>>
+@enduml

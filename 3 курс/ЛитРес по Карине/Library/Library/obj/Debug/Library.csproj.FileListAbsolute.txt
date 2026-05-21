@@ -1,0 +1,42 @@
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library.csproj.AssemblyReference.cache
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\MainWindow.g.cs
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\App.g.cs
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library_MarkupCompile.cache
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library_MarkupCompile.lref
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\bin\Debug\Library.exe.config
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\bin\Debug\Library.exe
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\bin\Debug\Library.pdb
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\MainWindow.baml
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library.g.resources
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library.Properties.Resources.resources
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library.csproj.GenerateResource.cache
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library.csproj.CoreCompileInputs.cache
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library.exe
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library.pdb
+Z:\Маклецов Никита Сергеевич\3 курс\Kursach\Library\Library\obj\Debug\Library.exe.config
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.csproj.AssemblyReference.cache
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.exe.config
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.exe
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.pdb
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\Library.exe.config
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\Library.exe
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\Library.pdb
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\EntityFramework.dll
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\EntityFramework.SqlServer.dll
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\EntityFramework.xml
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\EntityFramework.SqlServer.xml
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\LoginWindow.g.cs
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\App.g.cs
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library_Content.g.cs
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library_MarkupCompile.cache
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library_MarkupCompile.lref
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\LoginWindow.baml
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.g.resources
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.Properties.Resources.resources
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.csproj.GenerateResource.cache
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.csproj.CoreCompileInputs.cache
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.csproj.Up2Date
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\MainWindow.g.cs
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\MainWindow.baml
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\BookEditWindow.g.cs
+Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\BookEditWindow.baml

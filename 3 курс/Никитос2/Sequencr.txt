@@ -1,0 +1,19 @@
+@startuml
+actor Турист as T
+participant "Сайт/Офис" as UI
+participant "Контроллер" as C
+participant "БД_Туристы" as DB_T
+participant "БД_Группы" as DB_G
+participant "БД_Продажи" as DB_S
+
+T -> UI : Выбор тура и группы
+UI -> C : sendBooking(tourId, groupId, touristData)
+C -> DB_T : INSERT OR SELECT tourist
+DB_T --> C : touristId
+C -> DB_G : CHECK capacity(groupId)
+DB_G --> C : availableSlots
+C -> DB_S : INSERT sale_record(touristId, groupId, price)
+DB_S --> C : saleId
+C --> UI : Подтверждение + Документы
+UI --> T : Получение путевки
+@enduml

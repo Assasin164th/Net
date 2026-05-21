@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="73c3e6598a874feca8650a8e4e8f87d8" Name="Diagram1">
+        <EntityTypeShape EntityType="FishFirm164Model.Categories" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.Customers" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.Manufacturers" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.ProductImages" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.Products" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.PurchaseItems" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.Purchases" Width="1.5" PointX="6" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.Roles" Width="1.5" PointX="1.5" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.SaleItems" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.Sales" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.SiteImages" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.Suppliers" Width="1.5" PointX="3.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishFirm164Model.Users" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="FishFirm164Model.FK__Categorie__Paren__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__Products__Catego__02FC7413" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__Sales__CustomerI__151B244E" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__Products__Manufa__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__ProductIm__Produ__09A971A2" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__PurchaseI__Produ__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__SaleItems__Produ__19DFD96B" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__PurchaseI__Purch__10566F31" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__Purchases__Suppl__0D7A0286" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__Users__RoleID__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__SaleItems__SaleI__18EBB532" ManuallyRouted="false" />
+        <AssociationConnector Association="FishFirm164Model.FK__Sales__UserID__160F4887" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FishFirm164Model.Boats" Width="1.5" PointX="8.375" PointY="10.875" />
+        <EntityTypeShape EntityType="FishFirm164Model.Catch" Width="1.5" PointX="12.875" PointY="10.5" />
+        <EntityTypeShape EntityType="FishFirm164Model.CrewMembers" Width="1.5" PointX="13.625" PointY="6.875" />
+        <EntityTypeShape EntityType="FishFirm164Model.FishingSpots" Width="1.5" PointX="10.625" PointY="8" />
+        <EntityTypeShape EntityType="FishFirm164Model.sysdiagrams" Width="1.5" PointX="5.375" PointY="8.75" />
+        <EntityTypeShape EntityType="FishFirm164Model.TripCrew" Width="1.5" PointX="15.875" PointY="11" />
+        <EntityTypeShape EntityType="FishFirm164Model.Trips" Width="1.5" PointX="10.625" PointY="10.75" />
+        <AssociationConnector Association="FishFirm164Model.FK__Trips__BoatID__395884C4" />
+        <AssociationConnector Association="FishFirm164Model.FK__Catch__SpotID__40F9A68C" />
+        <AssociationConnector Association="FishFirm164Model.FK__Catch__TripID__40058253" />
+        <AssociationConnector Association="FishFirm164Model.FK__TripCrew__CrewMe__3D2915A8" />
+        <AssociationConnector Association="FishFirm164Model.FK__TripCrew__TripID__3C34F16F" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

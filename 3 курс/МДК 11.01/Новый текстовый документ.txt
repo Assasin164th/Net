@@ -1,0 +1,621 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 9.6.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use forumMakletsov
+ERROR 1049 (42000): Unknown database 'forummakletsov'
+mysql> create table topics (
+    -> id_topic int (10) AUTO_INCREMENT,
+    -> topic_name varchar(100) NOT NULL,
+    -> id_author int (10) NOT NULL,
+    -> PRIMARY KEY (id_topic),
+    -> FOREIGN KEY (id_author) REFERENCES users (id_user)
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> create database forumMakletsov
+    -> ;
+Query OK, 1 row affected (0.153 sec)
+
+mysql> create table topics (
+    -> id_topic int (10) AUTO_INCREMENT,
+    -> topic_name varchar(100) NOT NULL,
+    -> id_author int (10) NOT NULL,
+    -> PRIMARY KEY (id_topic),
+    -> FOREIGN KEY (id_author) REFERENCES users (id_user)
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> create table users (
+    -> id_user int (10) AUTO_INCREMENT,
+    -> name varchar(20) NOT NULL,
+    -> email varchar(50) NOT NULL,
+    -> password varchar(15) NOT NULL,
+    -> PRIMARY KEY (id_user)
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> use forumMakletsov
+Database changed
+mysql> create table users (
+    -> id_user int (10) AUTO_INCREMENT,
+    -> name varchar(20) NOT NULL,
+    -> email varchar(50) NOT NULL,
+    -> password varchar(15) NOT NULL,
+    -> PRIMARY KEY (id_user)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.380 sec)
+
+mysql> create table topics (
+    -> id_topic int (10) AUTO_INCREMENT,
+    -> topic_name varchar(100) NOT NULL,
+    -> id_author int (10) NOT NULL,
+    -> PRIMARY KEY (id_topic),
+    -> FOREIGN KEY (id_author) REFERENCES users (id_user)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.547 sec)
+
+mysql> create table posts (
+    -> id_post int (10) AUTO_INCREMENT,
+    -> message text NOT NULL,
+    -> id_author int (10) NOT NULL,
+    -> id_topic int (10) NOT NULL,
+    -> PRIMARY KEY (id_post),
+    -> FOREIGN KEY (id_author) REFERENCES users (id_user),
+    -> FOREIGN KEY (id_topic) REFERENCES topics (id_topic)
+    -> );
+Query OK, 0 rows affected, 3 warnings (0.397 sec)
+
+mysql> INSERT INTO users VALUES ('1','sergey', 'sergey@mail.ru', '1111');
+Query OK, 1 row affected (0.146 sec)
+
+mysql> INSERT INTO users (name, email, password) VALUES
+    -> ('katy', 'katy@gmail.ru', '33333'),
+    -> ('sveta', 'sveta@rambler.ru', '4444'),
+    -> ('oleg', 'oleg@yandex.ru', '55555');
+Query OK, 3 rows affected (0.055 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO topics (topic_name, id_author) VALUES
+    -> ('о рыбалке', '1'),
+    -> ('велосипеды', '2'),
+    -> ('ночные клубы', '1'),
+    -> ('о рыбалке', '4');
+Query OK, 4 rows affected (0.060 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO posts (message, id_author, id_topic) VALUES
+    -> ('думаю, надо сделать так', '1', '1'),
+    -> ('согласен', '2', '4'),
+    -> ('а еще можно сделать так', '3', '1'),
+    -> ('согласен', '2', '1');
+Query OK, 4 rows affected (0.058 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO users (name, email, password) VALUES ('valera', 'valera@mail.ru', '2222');
+Query OK, 1 row affected (0.034 sec)
+
+mysql> SELECT * FROM users;
++---------+--------+------------------+----------+
+| id_user | name   | email            | password |
++---------+--------+------------------+----------+
+|       1 | sergey | sergey@mail.ru   | 1111     |
+|       2 | katy   | katy@gmail.ru    | 33333    |
+|       3 | sveta  | sveta@rambler.ru | 4444     |
+|       4 | oleg   | oleg@yandex.ru   | 55555    |
+|       5 | valera | valera@mail.ru   | 2222     |
++---------+--------+------------------+----------+
+5 rows in set (0.035 sec)
+
+mysql> SELECT id_user FROM users;
++---------+
+| id_user |
++---------+
+|       1 |
+|       2 |
+|       3 |
+|       4 |
+|       5 |
++---------+
+5 rows in set (0.011 sec)
+
+mysql> SELECT name, email FROM users;
++--------+------------------+
+| name   | email            |
++--------+------------------+
+| sergey | sergey@mail.ru   |
+| katy   | katy@gmail.ru    |
+| sveta  | sveta@rambler.ru |
+| oleg   | oleg@yandex.ru   |
+| valera | valera@mail.ru   |
++--------+------------------+
+5 rows in set (0.005 sec)
+
+mysql> SELECT * FROM topics;
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        1 | о рыбалке    |         1 |
+|        2 | велосипеды   |         2 |
+|        3 | ночные клубы |         1 |
+|        4 | о рыбалке    |         4 |
++----------+--------------+-----------+
+4 rows in set (0.005 sec)
+
+mysql> SELECT * FROM topics ORDER BY topic_name DESC;
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        1 | о рыбалке    |         1 |
+|        4 | о рыбалке    |         4 |
+|        3 | ночные клубы |         1 |
+|        2 | велосипеды   |         2 |
++----------+--------------+-----------+
+4 rows in set (0.039 sec)
+
+mysql> SELECT * FROM topics ORDER BY topic_name DESC, id_author DESC;
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        4 | о рыбалке    |         4 |
+|        1 | о рыбалке    |         1 |
+|        3 | ночные клубы |         1 |
+|        2 | велосипеды   |         2 |
++----------+--------------+-----------+
+4 rows in set (0.015 sec)
+
+mysql> SELECT * FROM topics WHERE id_author=4;
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        4 | о рыбалке  |         4 |
++----------+------------+-----------+
+1 row in set (0.065 sec)
+
+mysql> SELECT * FROM topics WHERE topic_name=’велосипеды’;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?велосипеды?' at line 1
+mysql> SELECT * FROM topics WHERE topic_name='велосипеды';
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        2 | велосипеды |         2 |
++----------+------------+-----------+
+1 row in set (0.008 sec)
+
+mysql> SELECT * FROM topics WHERE topic_name LIKE ‘%клуб%’;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?%клуб%?' at line 1
+mysql> SELECT * FROM topics WHERE topic_name LIKE '%клуб%';
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        3 | ночные клубы |         1 |
++----------+--------------+-----------+
+1 row in set (0.018 sec)
+
+mysql> SELECT * FROM topics WHERE topic_name LIKE '_ рыб%';
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        1 | о рыбалке  |         1 |
+|        4 | о рыбалке  |         4 |
++----------+------------+-----------+
+2 rows in set (0.008 sec)
+
+mysql> SELECT * FROM topics WHERE id_author=4ж
+    ->
+    ->
+    -> ;
+ERROR 1054 (42S22): Unknown column '4?' in 'where clause'
+mysql> SELECT * FROM topics WHERE id_author=4;
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        4 | о рыбалке  |         4 |
++----------+------------+-----------+
+1 row in set (0.007 sec)
+
+mysql> SELECT * FROM topics WHERE id_author>2;
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        4 | о рыбалке  |         4 |
++----------+------------+-----------+
+1 row in set (0.437 sec)
+
+mysql> SELECT * FROM topics WHERE id_author<3;
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        1 | о рыбалке    |         1 |
+|        3 | ночные клубы |         1 |
+|        2 | велосипеды   |         2 |
++----------+--------------+-----------+
+3 rows in set (0.007 sec)
+
+mysql> SELECT * FROM topics WHERE id_author>=2;
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        2 | велосипеды |         2 |
+|        4 | о рыбалке  |         4 |
++----------+------------+-----------+
+2 rows in set (0.006 sec)
+
+mysql> SELECT * FROM topics WHERE id_author<=3;
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        1 | о рыбалке    |         1 |
+|        3 | ночные клубы |         1 |
+|        2 | велосипеды   |         2 |
++----------+--------------+-----------+
+3 rows in set (0.007 sec)
+
+mysql> SELECT * FROM topics WHERE id_author!=1;
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        2 | велосипеды |         2 |
+|        4 | о рыбалке  |         4 |
++----------+------------+-----------+
+2 rows in set (0.007 sec)
+
+mysql> SELECT * FROM topics WHERE id_author IS NOT NULL;
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        1 | о рыбалке    |         1 |
+|        2 | велосипеды   |         2 |
+|        3 | ночные клубы |         1 |
+|        4 | о рыбалке    |         4 |
++----------+--------------+-----------+
+4 rows in set (0.005 sec)
+
+mysql> SELECT * FROM topics WHERE id_author IS NULL;
+Empty set (0.005 sec)
+
+mysql> SELECT * FROM topics WHERE id_author BETWEEN 1 AND 3;
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        1 | о рыбалке    |         1 |
+|        3 | ночные клубы |         1 |
+|        2 | велосипеды   |         2 |
++----------+--------------+-----------+
+3 rows in set (0.014 sec)
+
+mysql> SELECT * FROM topics WHERE id_author IN (1, 4);
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        1 | о рыбалке    |         1 |
+|        3 | ночные клубы |         1 |
+|        4 | о рыбалке    |         4 |
++----------+--------------+-----------+
+3 rows in set (0.009 sec)
+
+mysql> SELECT * FROM topics WHERE id_author NOT IN (1, 4);
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        2 | велосипеды |         2 |
++----------+------------+-----------+
+1 row in set (0.009 sec)
+
+mysql> SELECT * FROM topics WHERE topic_name LIKE 'вел%';
++----------+------------+-----------+
+| id_topic | topic_name | id_author |
++----------+------------+-----------+
+|        2 | велосипеды |         2 |
++----------+------------+-----------+
+1 row in set (0.006 sec)
+
+mysql> SELECT * FROM topics WHERE topic_name NOT LIKE 'вел%';
++----------+--------------+-----------+
+| id_topic | topic_name   | id_author |
++----------+--------------+-----------+
+|        1 | о рыбалке    |         1 |
+|        3 | ночные клубы |         1 |
+|        4 | о рыбалке    |         4 |
++----------+--------------+-----------+
+3 rows in set (0.005 sec)
+
+mysql> SELECT * FROM posts ORDER BY id_author;
++---------+-------------------------+-----------+----------+
+| id_post | message                 | id_author | id_topic |
++---------+-------------------------+-----------+----------+
+|       1 | думаю, надо сделать так |         1 |        1 |
+|       2 | согласен                |         2 |        4 |
+|       4 | согласен                |         2 |        1 |
+|       3 | а еще можно сделать так |         3 |        1 |
++---------+-------------------------+-----------+----------+
+4 rows in set (0.005 sec)
+
+mysql> SELECT * FROM posts WHERE id_author = 2;
++---------+----------+-----------+----------+
+| id_post | message  | id_author | id_topic |
++---------+----------+-----------+----------+
+|       2 | согласен |         2 |        4 |
+|       4 | согласен |         2 |        1 |
++---------+----------+-----------+----------+
+2 rows in set (0.006 sec)
+
+mysql> SELECT * FROM posts WHERE message LIKE '%сделать%';
++---------+-------------------------+-----------+----------+
+| id_post | message                 | id_author | id_topic |
++---------+-------------------------+-----------+----------+
+|       1 | думаю, надо сделать так |         1 |        1 |
+|       3 | а еще можно сделать так |         3 |        1 |
++---------+-------------------------+-----------+----------+
+2 rows in set (0.005 sec)
+
+mysql> SELECT * FROM posts WHERE id_topic IN (1, 4);
++---------+-------------------------+-----------+----------+
+| id_post | message                 | id_author | id_topic |
++---------+-------------------------+-----------+----------+
+|       1 | думаю, надо сделать так |         1 |        1 |
+|       3 | а еще можно сделать так |         3 |        1 |
+|       4 | согласен                |         2 |        1 |
+|       2 | согласен                |         2 |        4 |
++---------+-------------------------+-----------+----------+
+4 rows in set (0.006 sec)
+
+mysql> SELECT message, id_author FROM posts WHERE id_topic = 1 ORDER BY message;
++-------------------------+-----------+
+| message                 | id_author |
++-------------------------+-----------+
+| а еще можно сделать так |         3 |
+| думаю, надо сделать так |         1 |
+| согласен                |         2 |
++-------------------------+-----------+
+3 rows in set (0.007 sec)
+
+mysql> SELECT name FROM users WHERE id_user IN
+    -> (SELECT id_author FROM topics WHERE topic_name='велосипеды');
++------+
+| name |
++------+
+| katy |
++------+
+1 row in set (0.073 sec)
+
+mysql> SELECT message FROM posts WHERE id_author IN
+    -> (SELECT id_author FROM topics WHERE topic_name='велосипеды');
++----------+
+| message  |
++----------+
+| согласен |
+| согласен |
++----------+
+2 rows in set (0.016 sec)
+
+mysql> SELECT topic_name FROM topics WHERE id_topic IN
+    -> (SELECT id_topic FROM posts WHERE id_author IN
+    -> (SELECT id_author FROM topics WHERE topic_name='велосипеды'));
++------------+
+| topic_name |
++------------+
+| о рыбалке  |
+| о рыбалке  |
++------------+
+2 rows in set (0.010 sec)
+
+mysql> SELECT name FROM users WHERE id_user IN
+    -> (SELECT id_author FROM topics WHERE id_topic IN
+    -> (SELECT id_topic FROM posts WHERE message LIKE '%интересно%'));
+Empty set (0.012 sec)
+
+mysql> SELECT topic_name FROM topics WHERE id_topic IN
+    -> (SELECT id_topic FROM posts WHERE id_author IN
+    -> (SELECT id_author FROM users WHERE name LIKE 'А%'));
+Empty set (0.012 sec)
+
+mysql> SELECT message FROM posts WHERE id_topic IN
+    -> (SELECT id_topic FROM topics WHERE id_author IN
+    -> (SELECT id_user FROM users WHERE name IN
+    -> (SELECT name FROM users WHERE id_user > 5)));
+Empty set (0.009 sec)
+
+mysql> SELECT name FROM users WHERE id_user IN
+    -> (SELECT id_author FROM posts WHERE id_topic IN
+    -> (SELECT id_topic FROM topics WHERE id_author =
+    -> (SELECT id_user FROM users WHERE name = 'sergey')));
++--------+
+| name   |
++--------+
+| sergey |
+| katy   |
+| sveta  |
++--------+
+3 rows in set (0.023 sec)
+
+mysql> SELECT topic_name FROM topics WHERE id_topic IN
+    -> (SELECT id_topic FROM posts WHERE message IN
+    -> (SELECT message FROM posts WHERE message LIKE '%согласен%'));
++------------+
+| topic_name |
++------------+
+| о рыбалке  |
+| о рыбалке  |
++------------+
+2 rows in set (0.013 sec)
+
+mysql> SELECT email FROM users WHERE id_user IN
+    -> (SELECT id_author FROM topics WHERE id_topic IN
+    -> (SELECT id_topic FROM posts WHERE id_author !=
+    -> (SELECT id_author FROM topics WHERE id_topic = posts.id_topic)));
++----------------+
+| email          |
++----------------+
+| sergey@mail.ru |
+| oleg@yandex.ru |
++----------------+
+2 rows in set (0.008 sec)
+
+mysql> SELECT topic_name, name FROM topics, users;
++--------------+--------+
+| topic_name   | name   |
++--------------+--------+
+| о рыбалке    | sergey |
+| ночные клубы | sergey |
+| велосипеды   | sergey |
+| о рыбалке    | sergey |
+| о рыбалке    | katy   |
+| ночные клубы | katy   |
+| велосипеды   | katy   |
+| о рыбалке    | katy   |
+| о рыбалке    | sveta  |
+| ночные клубы | sveta  |
+| велосипеды   | sveta  |
+| о рыбалке    | sveta  |
+| о рыбалке    | oleg   |
+| ночные клубы | oleg   |
+| велосипеды   | oleg   |
+| о рыбалке    | oleg   |
+| о рыбалке    | valera |
+| ночные клубы | valera |
+| велосипеды   | valera |
+| о рыбалке    | valera |
++--------------+--------+
+20 rows in set (0.012 sec)
+
+mysql> SELECT topic_name, name FROM topics, users WHERE topics.id_author=users.id_user;
++--------------+--------+
+| topic_name   | name   |
++--------------+--------+
+| о рыбалке    | sergey |
+| велосипеды   | katy   |
+| ночные клубы | sergey |
+| о рыбалке    | oleg   |
++--------------+--------+
+4 rows in set (0.005 sec)
+
+mysql> SELECT message, id_author, id_topic FROM posts;
++-------------------------+-----------+----------+
+| message                 | id_author | id_topic |
++-------------------------+-----------+----------+
+| думаю, надо сделать так |         1 |        1 |
+| согласен                |         2 |        4 |
+| а еще можно сделать так |         3 |        1 |
+| согласен                |         2 |        1 |
++-------------------------+-----------+----------+
+4 rows in set (0.008 sec)
+
+mysql> SELECT posts.message, topics.topic_name, users.name
+    -> FROM posts, topics, users
+    -> WHERE posts.id_author=users.id_user AND posts.id_topic=topics.id_topic;
++-------------------------+------------+--------+
+| message                 | topic_name | name   |
++-------------------------+------------+--------+
+| думаю, надо сделать так | о рыбалке  | sergey |
+| согласен                | о рыбалке  | katy   |
+| а еще можно сделать так | о рыбалке  | sveta  |
+| согласен                | о рыбалке  | katy   |
++-------------------------+------------+--------+
+4 rows in set (0.008 sec)
+
+mysql> SELECT p.message, u.name AS author_name, t.topic_name
+    -> FROM posts p
+    -> INNER JOIN users u ON p.id_author = u.id_user
+    -> INNER JOIN topics t ON p.id_topic = t.id_topic
+    -> ORDER BY t.topic_name;
++-------------------------+-------------+------------+
+| message                 | author_name | topic_name |
++-------------------------+-------------+------------+
+| думаю, надо сделать так | sergey      | о рыбалке  |
+| согласен                | katy        | о рыбалке  |
+| а еще можно сделать так | sveta       | о рыбалке  |
+| согласен                | katy        | о рыбалке  |
++-------------------------+-------------+------------+
+4 rows in set (0.018 sec)
+
+mysql> SELECT topic_name,
+    ->        (SELECT name FROM users WHERE id_user = topics.id_author) AS author_name
+    -> FROM topics
+    -> WHERE id_topic IN
+    ->     (SELECT id_topic FROM posts);
++------------+-------------+
+| topic_name | author_name |
++------------+-------------+
+| о рыбалке  | sergey      |
+| о рыбалке  | oleg        |
++------------+-------------+
+2 rows in set (0.009 sec)
+
+mysql> SELECT message,
+    ->        (SELECT name FROM users WHERE id_user = posts.id_author) AS author_name
+    -> FROM posts
+    -> WHERE id_topic IN
+    ->     (SELECT id_topic FROM topics
+    ->      WHERE id_author =
+    ->          (SELECT id_user FROM users WHERE name = 'sergey'));
++-------------------------+-------------+
+| message                 | author_name |
++-------------------------+-------------+
+| думаю, надо сделать так | sergey      |
+| а еще можно сделать так | sveta       |
+| согласен                | katy        |
++-------------------------+-------------+
+3 rows in set (0.008 sec)
+
+mysql> SELECT users.name, topics.topic_name
+    -> FROM topics, users
+    -> WHERE users.id_user=topics.id_author;
++--------+--------------+
+| name   | topic_name   |
++--------+--------------+
+| sergey | о рыбалке    |
+| katy   | велосипеды   |
+| sergey | ночные клубы |
+| oleg   | о рыбалке    |
++--------+--------------+
+4 rows in set (0.006 sec)
+
+mysql> SELECT users.name, topics.topic_name
+    -> FROM users RIGHT OUTER JOIN topics
+    -> ON users.id_user=topics.id_author;
++--------+--------------+
+| name   | topic_name   |
++--------+--------------+
+| sergey | о рыбалке    |
+| katy   | велосипеды   |
+| sergey | ночные клубы |
+| oleg   | о рыбалке    |
++--------+--------------+
+4 rows in set (0.006 sec)
+
+mysql> SELECT users.name, topics.topic_name
+    -> FROM users LEFT OUTER JOIN topics
+    -> ON users.id_user = topics.id_author;
++--------+--------------+
+| name   | topic_name   |
++--------+--------------+
+| sergey | ночные клубы |
+| sergey | о рыбалке    |
+| katy   | велосипеды   |
+| sveta  | NULL         |
+| oleg   | о рыбалке    |
+| valera | NULL         |
++--------+--------------+
+6 rows in set (0.006 sec)
+
+mysql> SELECT users.name, topics.topic_name
+    -> FROM users RIGHT OUTER JOIN topics
+    -> ON users.id_user = topics.id_author;
++--------+--------------+
+| name   | topic_name   |
++--------+--------------+
+| sergey | о рыбалке    |
+| katy   | велосипеды   |
+| sergey | ночные клубы |
+| oleg   | о рыбалке    |
++--------+--------------+
+4 rows in set (0.009 sec)
+
+mysql>

@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="FishFirm164.ReportsControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FishFirm164"
+        mc:Ignorable="d"
+        Background="#2d2d2d">
+    <Grid  Background="{DynamicResource MainBackground}">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Margin="0,0,0,10">
+            <Button x:Name="btnStock" Content="Остатки товаров" Width="150" Margin="0,0,10,0" Click="BtnStock_Click"/>
+            <Button x:Name="btnProfit" Content="Прибыль за период" Width="150" Margin="0,0,10,0" Click="BtnProfit_Click"/>
+            <Button x:Name="btnPopular" Content="Популярные товары" Width="150" Click="BtnPopular_Click"/>
+        </WrapPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Collapsed" x:Name="periodPanel">
+            <TextBlock Text="С:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <DatePicker x:Name="dpStart" Width="120" Margin="0,0,10,0"/>
+            <TextBlock Text="По:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <DatePicker x:Name="dpEnd" Width="120" Margin="0,0,10,0"/>
+            <Button Content="Показать" Width="100" Click="BtnShowProfit_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="dgReport" Grid.Row="2" AutoGenerateColumns="True" IsReadOnly="True"
+                  HeadersVisibility="Column"/>
+    </Grid>
+    </Grid>
+</UserControl>

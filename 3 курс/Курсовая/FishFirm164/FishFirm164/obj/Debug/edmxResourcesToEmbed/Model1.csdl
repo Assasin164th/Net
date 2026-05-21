@@ -1,0 +1,536 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FishFirm164Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ParentCategoryID" Type="Int32" />
+    <NavigationProperty Name="Categories1" Relationship="Self.FK__Categorie__Paren__72C60C4A" FromRole="Categories" ToRole="Categories1" />
+    <NavigationProperty Name="Categories2" Relationship="Self.FK__Categorie__Paren__72C60C4A" FromRole="Categories1" ToRole="Categories" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Products__Catego__02FC7413" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DiscountCard" Type="Boolean" />
+    <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__CustomerI__151B244E" FromRole="Customers" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="Manufacturers">
+    <Key>
+      <PropertyRef Name="ManufacturerID" />
+    </Key>
+    <Property Name="ManufacturerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Products__Manufa__03F0984C" FromRole="Manufacturers" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="ProductImages">
+    <Key>
+      <PropertyRef Name="ImageID" />
+    </Key>
+    <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="ImageURL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsMain" Type="Boolean" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="AltText" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="UploadedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__ProductIm__Produ__09A971A2" FromRole="ProductImages" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="ManufacturerID" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuantityInStock" Type="Int32" Nullable="false" />
+    <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CostPrice" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="RetailPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="MinStock" Type="Int32" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK__Products__Catego__02FC7413" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="Manufacturers" Relationship="Self.FK__Products__Manufa__03F0984C" FromRole="Products" ToRole="Manufacturers" />
+    <NavigationProperty Name="ProductImages" Relationship="Self.FK__ProductIm__Produ__09A971A2" FromRole="Products" ToRole="ProductImages" />
+    <NavigationProperty Name="PurchaseItems" Relationship="Self.FK__PurchaseI__Produ__114A936A" FromRole="Products" ToRole="PurchaseItems" />
+    <NavigationProperty Name="SaleItems" Relationship="Self.FK__SaleItems__Produ__19DFD96B" FromRole="Products" ToRole="SaleItems" />
+  </EntityType>
+  <EntityType Name="PurchaseItems">
+    <Key>
+      <PropertyRef Name="PurchaseItemID" />
+    </Key>
+    <Property Name="PurchaseItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PurchaseID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="PricePerUnit" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__PurchaseI__Produ__114A936A" FromRole="PurchaseItems" ToRole="Products" />
+    <NavigationProperty Name="Purchases" Relationship="Self.FK__PurchaseI__Purch__10566F31" FromRole="PurchaseItems" ToRole="Purchases" />
+  </EntityType>
+  <EntityType Name="Purchases">
+    <Key>
+      <PropertyRef Name="PurchaseID" />
+    </Key>
+    <Property Name="PurchaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierID" Type="Int32" Nullable="false" />
+    <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="PurchaseItems" Relationship="Self.FK__PurchaseI__Purch__10566F31" FromRole="Purchases" ToRole="PurchaseItems" />
+    <NavigationProperty Name="Suppliers" Relationship="Self.FK__Purchases__Suppl__0D7A0286" FromRole="Purchases" ToRole="Suppliers" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Users__RoleID__7E37BEF6" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="SaleItems">
+    <Key>
+      <PropertyRef Name="SaleItemID" />
+    </Key>
+    <Property Name="SaleItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SaleID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="PriceAtSale" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__SaleItems__Produ__19DFD96B" FromRole="SaleItems" ToRole="Products" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK__SaleItems__SaleI__18EBB532" FromRole="SaleItems" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="Sales">
+    <Key>
+      <PropertyRef Name="SaleID" />
+    </Key>
+    <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Sales__CustomerI__151B244E" FromRole="Sales" ToRole="Customers" />
+    <NavigationProperty Name="SaleItems" Relationship="Self.FK__SaleItems__SaleI__18EBB532" FromRole="Sales" ToRole="SaleItems" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Sales__UserID__160F4887" FromRole="Sales" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="SiteImages">
+    <Key>
+      <PropertyRef Name="SiteImageID" />
+    </Key>
+    <Property Name="SiteImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ImageURL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AltText" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="UploadedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Suppliers">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContactPerson" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Purchases" Relationship="Self.FK__Purchases__Suppl__0D7A0286" FromRole="Suppliers" ToRole="Purchases" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleID__7E37BEF6" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__UserID__160F4887" FromRole="Users" ToRole="Sales" />
+  </EntityType>
+  <Association Name="FK__Categorie__Paren__72C60C4A">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+    <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Categories1">
+        <PropertyRef Name="ParentCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__Catego__02FC7413">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Sales__CustomerI__151B244E">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__Manufa__03F0984C">
+    <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacturers">
+        <PropertyRef Name="ManufacturerID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="ManufacturerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductIm__Produ__09A971A2">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductImages" Type="Self.ProductImages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductImages">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PurchaseI__Produ__114A936A">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="PurchaseItems" Type="Self.PurchaseItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="PurchaseItems">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SaleItems__Produ__19DFD96B">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="SaleItems" Type="Self.SaleItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="SaleItems">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PurchaseI__Purch__10566F31">
+    <End Role="Purchases" Type="Self.Purchases" Multiplicity="1" />
+    <End Role="PurchaseItems" Type="Self.PurchaseItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Purchases">
+        <PropertyRef Name="PurchaseID" />
+      </Principal>
+      <Dependent Role="PurchaseItems">
+        <PropertyRef Name="PurchaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Purchases__Suppl__0D7A0286">
+    <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+    <End Role="Purchases" Type="Self.Purchases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="Purchases">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__RoleID__7E37BEF6">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SaleItems__SaleI__18EBB532">
+    <End Role="Sales" Type="Self.Sales" Multiplicity="1" />
+    <End Role="SaleItems" Type="Self.SaleItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sales">
+        <PropertyRef Name="SaleID" />
+      </Principal>
+      <Dependent Role="SaleItems">
+        <PropertyRef Name="SaleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Sales__UserID__160F4887">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FishFirm164Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Categories" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" />
+    <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" />
+    <EntitySet Name="ProductImages" EntityType="Self.ProductImages" />
+    <EntitySet Name="Products" EntityType="Self.Products" />
+    <EntitySet Name="PurchaseItems" EntityType="Self.PurchaseItems" />
+    <EntitySet Name="Purchases" EntityType="Self.Purchases" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="SaleItems" EntityType="Self.SaleItems" />
+    <EntitySet Name="Sales" EntityType="Self.Sales" />
+    <EntitySet Name="SiteImages" EntityType="Self.SiteImages" />
+    <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK__Categorie__Paren__72C60C4A" Association="Self.FK__Categorie__Paren__72C60C4A">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Categories1" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__Catego__02FC7413" Association="Self.FK__Products__Catego__02FC7413">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Sales__CustomerI__151B244E" Association="Self.FK__Sales__CustomerI__151B244E">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__Manufa__03F0984C" Association="Self.FK__Products__Manufa__03F0984C">
+      <End Role="Manufacturers" EntitySet="Manufacturers" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductIm__Produ__09A971A2" Association="Self.FK__ProductIm__Produ__09A971A2">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductImages" EntitySet="ProductImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PurchaseI__Produ__114A936A" Association="Self.FK__PurchaseI__Produ__114A936A">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="PurchaseItems" EntitySet="PurchaseItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SaleItems__Produ__19DFD96B" Association="Self.FK__SaleItems__Produ__19DFD96B">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="SaleItems" EntitySet="SaleItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PurchaseI__Purch__10566F31" Association="Self.FK__PurchaseI__Purch__10566F31">
+      <End Role="Purchases" EntitySet="Purchases" />
+      <End Role="PurchaseItems" EntitySet="PurchaseItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Purchases__Suppl__0D7A0286" Association="Self.FK__Purchases__Suppl__0D7A0286">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="Purchases" EntitySet="Purchases" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__RoleID__7E37BEF6" Association="Self.FK__Users__RoleID__7E37BEF6">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SaleItems__SaleI__18EBB532" Association="Self.FK__SaleItems__SaleI__18EBB532">
+      <End Role="Sales" EntitySet="Sales" />
+      <End Role="SaleItems" EntitySet="SaleItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Sales__UserID__160F4887" Association="Self.FK__Sales__UserID__160F4887">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <EntitySet Name="Boats" EntityType="FishFirm164Model.Boats" />
+    <EntitySet Name="Catch" EntityType="FishFirm164Model.Catch" />
+    <EntitySet Name="CrewMembers" EntityType="FishFirm164Model.CrewMembers" />
+    <EntitySet Name="FishingSpots" EntityType="FishFirm164Model.FishingSpots" />
+    <EntitySet Name="sysdiagrams" EntityType="FishFirm164Model.sysdiagrams" />
+    <EntitySet Name="TripCrew" EntityType="FishFirm164Model.TripCrew" />
+    <EntitySet Name="Trips" EntityType="FishFirm164Model.Trips" />
+    <AssociationSet Name="FK__Trips__BoatID__395884C4" Association="FishFirm164Model.FK__Trips__BoatID__395884C4">
+      <End Role="Boats" EntitySet="Boats" />
+      <End Role="Trips" EntitySet="Trips" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Catch__SpotID__40F9A68C" Association="FishFirm164Model.FK__Catch__SpotID__40F9A68C">
+      <End Role="FishingSpots" EntitySet="FishingSpots" />
+      <End Role="Catch" EntitySet="Catch" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Catch__TripID__40058253" Association="FishFirm164Model.FK__Catch__TripID__40058253">
+      <End Role="Trips" EntitySet="Trips" />
+      <End Role="Catch" EntitySet="Catch" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TripCrew__CrewMe__3D2915A8" Association="FishFirm164Model.FK__TripCrew__CrewMe__3D2915A8">
+      <End Role="CrewMembers" EntitySet="CrewMembers" />
+      <End Role="TripCrew" EntitySet="TripCrew" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TripCrew__TripID__3C34F16F" Association="FishFirm164Model.FK__TripCrew__TripID__3C34F16F">
+      <End Role="Trips" EntitySet="Trips" />
+      <End Role="TripCrew" EntitySet="TripCrew" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Boats">
+    <Key>
+      <PropertyRef Name="BoatID" />
+    </Key>
+    <Property Name="BoatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BoatName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BoatType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Displacement" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="BuildDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Trips" Relationship="FishFirm164Model.FK__Trips__BoatID__395884C4" FromRole="Boats" ToRole="Trips" />
+  </EntityType>
+  <EntityType Name="Catch">
+    <Key>
+      <PropertyRef Name="CatchID" />
+    </Key>
+    <Property Name="CatchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TripID" Type="Int32" Nullable="false" />
+    <Property Name="SpotID" Type="Int32" Nullable="false" />
+    <Property Name="FishType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Weight" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="Quality" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ArrivalDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DepartureDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="FishingSpots" Relationship="FishFirm164Model.FK__Catch__SpotID__40F9A68C" FromRole="Catch" ToRole="FishingSpots" />
+    <NavigationProperty Name="Trips" Relationship="FishFirm164Model.FK__Catch__TripID__40058253" FromRole="Catch" ToRole="Trips" />
+  </EntityType>
+  <EntityType Name="CrewMembers">
+    <Key>
+      <PropertyRef Name="CrewMemberID" />
+    </Key>
+    <Property Name="CrewMemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TripCrew" Relationship="FishFirm164Model.FK__TripCrew__CrewMe__3D2915A8" FromRole="CrewMembers" ToRole="TripCrew" />
+  </EntityType>
+  <EntityType Name="FishingSpots">
+    <Key>
+      <PropertyRef Name="SpotID" />
+    </Key>
+    <Property Name="SpotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SpotName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Coordinates" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Catch" Relationship="FishFirm164Model.FK__Catch__SpotID__40F9A68C" FromRole="FishingSpots" ToRole="Catch" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TripCrew">
+    <Key>
+      <PropertyRef Name="TripCrewID" />
+    </Key>
+    <Property Name="TripCrewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TripID" Type="Int32" Nullable="false" />
+    <Property Name="CrewMemberID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CrewMembers" Relationship="FishFirm164Model.FK__TripCrew__CrewMe__3D2915A8" FromRole="TripCrew" ToRole="CrewMembers" />
+    <NavigationProperty Name="Trips" Relationship="FishFirm164Model.FK__TripCrew__TripID__3C34F16F" FromRole="TripCrew" ToRole="Trips" />
+  </EntityType>
+  <EntityType Name="Trips">
+    <Key>
+      <PropertyRef Name="TripID" />
+    </Key>
+    <Property Name="TripID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BoatID" Type="Int32" Nullable="false" />
+    <Property Name="DepartureDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ReturnDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Boats" Relationship="FishFirm164Model.FK__Trips__BoatID__395884C4" FromRole="Trips" ToRole="Boats" />
+    <NavigationProperty Name="Catch" Relationship="FishFirm164Model.FK__Catch__TripID__40058253" FromRole="Trips" ToRole="Catch" />
+    <NavigationProperty Name="TripCrew" Relationship="FishFirm164Model.FK__TripCrew__TripID__3C34F16F" FromRole="Trips" ToRole="TripCrew" />
+  </EntityType>
+  <Association Name="FK__Trips__BoatID__395884C4">
+    <End Type="FishFirm164Model.Boats" Role="Boats" Multiplicity="1" />
+    <End Type="FishFirm164Model.Trips" Role="Trips" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Boats">
+        <PropertyRef Name="BoatID" />
+      </Principal>
+      <Dependent Role="Trips">
+        <PropertyRef Name="BoatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Catch__SpotID__40F9A68C">
+    <End Type="FishFirm164Model.FishingSpots" Role="FishingSpots" Multiplicity="1" />
+    <End Type="FishFirm164Model.Catch" Role="Catch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FishingSpots">
+        <PropertyRef Name="SpotID" />
+      </Principal>
+      <Dependent Role="Catch">
+        <PropertyRef Name="SpotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Catch__TripID__40058253">
+    <End Type="FishFirm164Model.Trips" Role="Trips" Multiplicity="1" />
+    <End Type="FishFirm164Model.Catch" Role="Catch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trips">
+        <PropertyRef Name="TripID" />
+      </Principal>
+      <Dependent Role="Catch">
+        <PropertyRef Name="TripID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TripCrew__CrewMe__3D2915A8">
+    <End Type="FishFirm164Model.CrewMembers" Role="CrewMembers" Multiplicity="1" />
+    <End Type="FishFirm164Model.TripCrew" Role="TripCrew" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CrewMembers">
+        <PropertyRef Name="CrewMemberID" />
+      </Principal>
+      <Dependent Role="TripCrew">
+        <PropertyRef Name="CrewMemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TripCrew__TripID__3C34F16F">
+    <End Type="FishFirm164Model.Trips" Role="Trips" Multiplicity="1" />
+    <End Type="FishFirm164Model.TripCrew" Role="TripCrew" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trips">
+        <PropertyRef Name="TripID" />
+      </Principal>
+      <Dependent Role="TripCrew">
+        <PropertyRef Name="TripID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,32 @@
+﻿<Window x:Class="FishFirm164.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Рыболовный магазин + Флот" Height="700" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource MainBackground}"
+        Foreground="{DynamicResource TextForeground}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#1e1e1e" Padding="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock x:Name="txtUserInfo" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="White"/>
+                <Button x:Name="btnLogout" Content="Выйти" Width="80" Click="BtnLogout_Click"/>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,5,0,0">
+            <RadioButton x:Name="rbShop" Content="Магазин" IsChecked="True" 
+                         GroupName="Module" Margin="0,0,10,0" Foreground="White"
+                         Checked="RbShop_Checked"/>
+            <RadioButton x:Name="rbFleet" Content="Учёт флота" 
+                         GroupName="Module" Foreground="White"
+                         Checked="RbFleet_Checked"/>
+        </StackPanel>
+
+        <ContentControl x:Name="mainContent" Grid.Row="1" Margin="5"/>
+    </Grid>
+</Window>
