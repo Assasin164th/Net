@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         mc:Ignorable="d"
-        Title="Редактирование книги" Height="350" Width="600"
+        Title="{Binding WindowName}" Height="550" Width="650"
         WindowStartupLocation="CenterOwner">
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -24,43 +25,56 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Название:" Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Margin="5" 
-                 Text="{Binding CurrentBook.Name}"/>
+                 Text="{Binding CurrentBook.Name, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Text="Автор:" Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <TextBox x:Name="txtAuthor" Grid.Row="1" Grid.Column="1" Margin="5" 
-                 Text="{Binding CurrentBook.Author}"/>
+                 Text="{Binding CurrentBook.Author, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Text="Жанр:" Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <ComboBox x:Name="cmbGenre" Grid.Row="2" Grid.Column="1" Margin="5"
-                  DisplayMemberPath="Name" SelectedValuePath="Genre"
-                  SelectedValue="{Binding CurrentBook.Genre}"/>
+                  DisplayMemberPath="Name" SelectedValuePath="Id"/>
 
-        <TextBlock Text="Публикатор:" Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Text="Издательство:" Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <ComboBox x:Name="cmbPublisher" Grid.Row="3" Grid.Column="1" Margin="5"
-                  DisplayMemberPath="Name" SelectedValuePath="PublisherId"
+                  DisplayMemberPath="Name" SelectedValuePath="Id"
                   SelectedValue="{Binding CurrentBook.PublisherId}"/>
 
-        <TextBlock Text="Цена:" Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Top"/>
+        <TextBlock Text="Цена:" Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <TextBox x:Name="txtPrice" Grid.Row="4" Grid.Column="1" Margin="5" 
-                 TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentBook.Price}"/>
+                 Text="{Binding CurrentBook.Price, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Text="Активна:" Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-        <CheckBox x:Name="chkIsAvailable" Grid.Row="5" Grid.Column="1" Margin="5"/>
+        <CheckBox x:Name="chkIsAvailable" Grid.Row="5" Grid.Column="1" Margin="5" 
+                  IsChecked="{Binding CurrentBook.IsAvailable}"/>
 
         <TextBlock Text="На складе:" Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtStockCount" Grid.Row="6" Grid.Column="1" Margin="5" Text="{Binding CurrentBook.StockCount}"/>
+        <TextBox x:Name="txtStockCount" Grid.Row="6" Grid.Column="1" Margin="5" 
+                 Text="{Binding CurrentBook.StockCount, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <StackPanel Grid.Row="10" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,5,5,5">
+        <TextBlock Text="Обложка:" Grid.Row="7" Grid.Column="0" Margin="5" VerticalAlignment="Top"/>
+        <StackPanel Grid.Row="7" Grid.Column="1" Margin="5" Orientation="Horizontal">
+            <Button x:Name="btnSelectCover" Content="Выбрать обложку" Width="120" 
+                    Click="BtnSelectCover_Click" Margin="0,0,10,0"
+                    Background="#3d3d3d" Foreground="White" BorderBrush="#555" BorderThickness="1"/>
+            <TextBlock Text="{Binding CoverImagePath}" VerticalAlignment="Center" 
+                       TextWrapping="Wrap" MaxWidth="300" FontSize="11" Foreground="Gray"/>
+        </StackPanel>
+
+        <Image Grid.Row="8" Grid.Column="1" Width="100" Height="130" 
+               Source="{Binding CoverImageSource}" Stretch="UniformToFill"
+               Margin="5,0,0,0" HorizontalAlignment="Left"/>
+
+        <StackPanel Grid.Row="11" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button x:Name="btnSave" Content="Сохранить" Width="80" Margin="20,0,10,0" Click="SaveButton_Click"
                     Background="#3d3d3d" Foreground="White" BorderBrush="#555" BorderThickness="1"/>
             <Button x:Name="btnCancel" Content="Отмена" Width="80" Click="BtnCancel_Click"
-                    Background="#3d3d3d" Foreground="White" BorderBrush="#555" BorderThickness="1" Margin="20,0,0,0"/>
-            <Button x:Name="btnGenre" Content="Добавить жанр" Width="100" Click="BtnCancel_Click"
-                    Background="#3d3d3d" Foreground="White" BorderBrush="#555" BorderThickness="1" Margin="20,0,0,0"/>
+                    Background="#3d3d3d" Foreground="White" BorderBrush="#555" BorderThickness="1"/>
         </StackPanel>
     </Grid>
 </Window>

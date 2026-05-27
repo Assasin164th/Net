@@ -8,6 +8,6 @@ namespace Library.classes
 {
     internal class AppConnect
     {
-        public static BookStoreEntities context = new BookStoreEntities();
+        public static BookStoreEntities1 context = new BookStoreEntities1();
     }
 }

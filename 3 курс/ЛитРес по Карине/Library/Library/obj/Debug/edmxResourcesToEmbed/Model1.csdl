@@ -67,34 +67,7 @@
     <Property Name="CityId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Book" Relationship="Self.FK_Book_Publisher" FromRole="Publisher" ToRole="Book" />
     <NavigationProperty Name="City" Relationship="Self.FK_Publisher_City" FromRole="Publisher" ToRole="City" />
-  </EntityType>
-  <EntityType Name="Roles">
-    <Key>
-      <PropertyRef Name="roleID" />
-    </Key>
-    <Property Name="roleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="Users">
-    <Key>
-      <PropertyRef Name="userID" />
-    </Key>
-    <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="roleID" Type="Int32" Nullable="false" />
-    <Property Name="pass" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-    <Property Name="login" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_Book_Publisher">
     <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
@@ -144,32 +117,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Users_Roles">
-    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-    <End Role="Users" Type="Self.Users" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Roles">
-        <PropertyRef Name="roleID" />
-      </Principal>
-      <Dependent Role="Users">
-        <PropertyRef Name="roleID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="BookGenre">
     <End Role="Book" Type="Self.Book" Multiplicity="*" />
     <End Role="Genre" Type="Self.Genre" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="BookStoreEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="BookStoreEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Book" EntityType="Self.Book" />
     <EntitySet Name="City" EntityType="Self.City" />
     <EntitySet Name="Client" EntityType="Self.Client" />
     <EntitySet Name="Genre" EntityType="Self.Genre" />
     <EntitySet Name="Order" EntityType="Self.Order" />
     <EntitySet Name="Publisher" EntityType="Self.Publisher" />
-    <EntitySet Name="Roles" EntityType="Self.Roles" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-    <EntitySet Name="Users" EntityType="Self.Users" />
     <AssociationSet Name="FK_Book_Publisher" Association="Self.FK_Book_Publisher">
       <End Role="Publisher" EntitySet="Publisher" />
       <End Role="Book" EntitySet="Book" />
@@ -186,13 +144,47 @@
       <End Role="Client" EntitySet="Client" />
       <End Role="Order" EntitySet="Order" />
     </AssociationSet>
-    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
-      <End Role="Roles" EntitySet="Roles" />
-      <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
     <AssociationSet Name="BookGenre" Association="Self.BookGenre">
       <End Role="Book" EntitySet="Book" />
       <End Role="Genre" EntitySet="Genre" />
     </AssociationSet>
+    <EntitySet Name="Roles" EntityType="BookStoreModel.Roles" />
+    <EntitySet Name="Users" EntityType="BookStoreModel.Users" />
+    <AssociationSet Name="FK_Users_Roles" Association="BookStoreModel.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="BookStoreModel.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Roles" Relationship="BookStoreModel.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+  </EntityType>
+  <Association Name="FK_Users_Roles">
+    <End Type="BookStoreModel.Roles" Role="Roles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="BookStoreModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

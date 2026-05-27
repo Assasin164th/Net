@@ -40,3 +40,39 @@ Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по
 Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\MainWindow.baml
 Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\BookEditWindow.g.cs
 Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\BookEditWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.csproj.AssemblyReference.cache
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.exe.config
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\BookEditWindow.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\LoginWindow.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\MainWindow.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\App.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library_Content.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library_MarkupCompile.cache
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library_MarkupCompile.lref
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.exe
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.pdb
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\Library.exe.config
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\Library.exe
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\Library.pdb
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\EntityFramework.dll
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\EntityFramework.xml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\BookEditWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\LoginWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\MainWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.g.resources
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.Properties.Resources.resources
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.csproj.GenerateResource.cache
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.csproj.CoreCompileInputs.cache
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\Library.csproj.Up2Date
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\PublisherEditWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\PublishersWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\PublisherEditWindow.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\PublishersWindow.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\AddPublisherWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\EditPublisherWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\AddPublisherWindow.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\EditPublisherWindow.g.cs
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\AddBookWindow.baml
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\AddBookWindow.g.cs

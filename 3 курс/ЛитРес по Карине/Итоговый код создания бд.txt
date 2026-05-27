@@ -1,0 +1,255 @@
+-- ============================================
+-- СОЗДАНИЕ БАЗЫ ДАННЫХ BookStore С НУЛЯ
+-- ============================================
+
+USE master;
+GO
+
+-- Удаляем базу, если существует
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'BookStore')
+    DROP DATABASE BookStore;
+GO
+
+-- Создаём базу данных
+CREATE DATABASE BookStore;
+GO
+
+USE BookStore;
+GO
+
+-- ============================================
+-- ТАБЛИЦЫ
+-- ============================================
+
+-- Города
+CREATE TABLE [dbo].[City](
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Name] NVARCHAR(100) NOT NULL,
+    [Country] NVARCHAR(100) NOT NULL,
+    CONSTRAINT [PK_City] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+GO
+
+-- Жанры
+CREATE TABLE [dbo].[Genre](
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Name] NVARCHAR(100) NOT NULL,
+    [Description] NVARCHAR(500) NULL,
+    CONSTRAINT [PK_Genre] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [UK_Genre_Name] UNIQUE ([Name])
+);
+GO
+
+-- Издательства
+CREATE TABLE [dbo].[Publisher](
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Name] NVARCHAR(150) NOT NULL,
+    [Rating] INT NOT NULL,
+    [CityId] INT NOT NULL,
+    [Description] NVARCHAR(500) NULL,
+    CONSTRAINT [PK_Publisher] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Publisher_City] FOREIGN KEY ([CityId]) REFERENCES [dbo].[City]([Id]),
+    CONSTRAINT [CK_Publisher_Rating] CHECK ([Rating] >= 0 AND [Rating] <= 5)
+);
+GO
+
+-- Книги
+CREATE TABLE [dbo].[Book](
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Name] NVARCHAR(200) NOT NULL,
+    [Author] NVARCHAR(150) NOT NULL,
+    [Price] DECIMAL(10,2) NOT NULL,
+    [StockCount] INT NOT NULL,
+    [IsAvailable] BIT NOT NULL DEFAULT 1,
+    [CoverImage] NVARCHAR(300) NULL,
+    [PublisherId] INT NOT NULL,
+    CONSTRAINT [PK_Book] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Book_Publisher] FOREIGN KEY ([PublisherId]) REFERENCES [dbo].[Publisher]([Id]),
+    CONSTRAINT [CK_Book_Price] CHECK ([Price] >= 0),
+    CONSTRAINT [CK_Book_Stock] CHECK ([StockCount] >= 0)
+);
+GO
+
+-- Связь книги-жанры (многие ко многим)
+CREATE TABLE [dbo].[BookGenre](
+    [BookId] INT NOT NULL,
+    [GenreId] INT NOT NULL,
+    CONSTRAINT [PK_BookGenre] PRIMARY KEY CLUSTERED ([BookId] ASC, [GenreId] ASC),
+    CONSTRAINT [FK_BookGenre_Book] FOREIGN KEY ([BookId]) REFERENCES [dbo].[Book]([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_BookGenre_Genre] FOREIGN KEY ([GenreId]) REFERENCES [dbo].[Genre]([Id]) ON DELETE CASCADE
+);
+GO
+
+-- Клиенты
+CREATE TABLE [dbo].[Client](
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Name] NVARCHAR(150) NOT NULL,
+    [Phone] NVARCHAR(20) NOT NULL,
+    [Email] NVARCHAR(100) NULL,
+    CONSTRAINT [PK_Client] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+GO
+
+-- Заказы
+CREATE TABLE [dbo].[Order](
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [ClientId] INT NOT NULL,
+    [BookId] INT NOT NULL,
+    [OrderDate] DATETIME NOT NULL DEFAULT GETDATE(),
+    [TicketsCount] INT NOT NULL,
+    [Status] NVARCHAR(50) NOT NULL DEFAULT 'Новый',
+    CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Order_Client] FOREIGN KEY ([ClientId]) REFERENCES [dbo].[Client]([Id]),
+    CONSTRAINT [FK_Order_Book] FOREIGN KEY ([BookId]) REFERENCES [dbo].[Book]([Id]),
+    CONSTRAINT [CK_Order_Tickets] CHECK ([TicketsCount] > 0)
+);
+GO
+
+-- Роли пользователей
+CREATE TABLE [dbo].[Roles](
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Name] NVARCHAR(50) NOT NULL,
+    CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [UK_Roles_Name] UNIQUE ([Name])
+);
+GO
+
+-- Пользователи
+CREATE TABLE [dbo].[Users](
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Login] NVARCHAR(50) NOT NULL,
+    [Password] NVARCHAR(100) NOT NULL,
+    [RoleId] INT NOT NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [UK_Users_Login] UNIQUE ([Login]),
+    CONSTRAINT [FK_Users_Roles] FOREIGN KEY ([RoleId]) REFERENCES [dbo].[Roles]([Id]) ON DELETE CASCADE
+);
+GO
+
+-- Индексы
+CREATE NONCLUSTERED INDEX [IX_Book_PublisherId] ON [dbo].[Book]([PublisherId]);
+CREATE NONCLUSTERED INDEX [IX_Book_IsAvailable] ON [dbo].[Book]([IsAvailable]);
+CREATE NONCLUSTERED INDEX [IX_Order_ClientId] ON [dbo].[Order]([ClientId]);
+CREATE NONCLUSTERED INDEX [IX_Order_BookId] ON [dbo].[Order]([BookId]);
+GO
+
+-- ============================================
+-- ЗАПОЛНЕНИЕ ТАБЛИЦ НАЧАЛЬНЫМИ ДАННЫМИ
+-- ============================================
+
+-- Города
+SET IDENTITY_INSERT [dbo].[City] ON;
+INSERT INTO [dbo].[City] ([Id], [Name], [Country]) VALUES
+(1, 'Москва', 'Россия'),
+(2, 'Санкт-Петербург', 'Россия'),
+(3, 'Казань', 'Россия'),
+(4, 'Екатеринбург', 'Россия'),
+(5, 'Новосибирск', 'Россия'),
+(6, 'Минск', 'Беларусь'),
+(7, 'Алматы', 'Казахстан'),
+(8, 'Киев', 'Украина'),
+(9, 'Ташкент', 'Узбекистан'),
+(10, 'Баку', 'Азербайджан');
+SET IDENTITY_INSERT [dbo].[City] OFF;
+GO
+
+-- Жанры
+SET IDENTITY_INSERT [dbo].[Genre] ON;
+INSERT INTO [dbo].[Genre] ([Id], [Name], [Description]) VALUES
+(1, 'Фантастика', 'Произведения о вымышленных мирах и технологиях'),
+(2, 'Классика', 'Произведения признанных авторов прошлых эпох'),
+(3, 'Детектив', 'Произведения о расследовании преступлений'),
+(4, 'Роман', 'Произведения о любовных отношениях'),
+(5, 'Ужасы', 'Произведения об ужасающих монстрах'),
+(6, 'Фэнтези', 'Произведения о магических мирах'),
+(7, 'Биография', 'Произведения о жизни реальных людей'),
+(8, 'Научная литература', 'Произведения о научных достижениях'),
+(9, 'Детская литература', 'Произведения для детей'),
+(10, 'Исторический роман', 'Произведения о исторических событиях');
+SET IDENTITY_INSERT [dbo].[Genre] OFF;
+GO
+
+-- Издательства (исправленные названия)
+SET IDENTITY_INSERT [dbo].[Publisher] ON;
+INSERT INTO [dbo].[Publisher] ([Id], [Name], [Rating], [CityId], [Description]) VALUES
+(1, 'Эксмо', 5, 1, NULL),
+(2, 'АСТ', 4, 1, NULL),
+(3, 'Питер', 4, 2, NULL),
+(4, 'Азбука', 5, 2, NULL),
+(5, 'Рипол Классик', 3, 1, NULL),
+(6, 'Олма-Пресс', 3, 1, NULL),
+(7, 'Издательство Ивана Лимбаха', 4, 2, NULL),
+(8, 'Книжный клуб', 3, 3, NULL),
+(9, 'Фолио', 4, 6, NULL),
+(10, 'Махаон', 5, 1, NULL);
+SET IDENTITY_INSERT [dbo].[Publisher] OFF;
+GO
+
+-- Книги
+SET IDENTITY_INSERT [dbo].[Book] ON;
+INSERT INTO [dbo].[Book] ([Id], [Name], [Author], [Price], [StockCount], [IsAvailable], [CoverImage], [PublisherId]) VALUES
+(1, 'Мастер и Маргарита', 'Булгаков М.А.', 450.00, 120, 1, NULL, 1),
+(2, 'Преступление и наказание', 'Достоевский Ф.М.', 380.00, 85, 1, NULL, 2),
+(3, 'Война и мир', 'Толстой Л.Н.', 890.00, 45, 1, NULL, 1),
+(4, 'Гарри Поттер и философский камень', 'Роулинг Дж.К.', 650.00, 200, 1, NULL, 3),
+(5, 'Властелин колец', 'Толкин Дж.Р.Р.', 1200.00, 60, 1, NULL, 4),
+(6, '1984', 'Оруэлл Дж.', 320.00, 150, 1, NULL, 2),
+(7, 'Преступление и наказание', 'Достоевский Ф.М.', 380.00, 0, 0, NULL, 2),
+(8, 'Дюна', 'Герберт Ф.', 780.00, 90, 1, NULL, 3),
+(9, 'Шерлок Холмс', 'Дойл А.К.', 420.00, 110, 1, NULL, 4),
+(10, 'Маленький принц', 'Сент-Экзюпери А.', 280.00, 180, 1, NULL, 5);
+SET IDENTITY_INSERT [dbo].[Book] OFF;
+GO
+
+-- Связь книг и жанров
+INSERT INTO [dbo].[BookGenre] ([BookId], [GenreId]) VALUES
+(1,2), (1,10), (2,2), (2,4), (3,2), (3,10),
+(4,6), (4,9), (5,6), (5,1), (6,1), (6,4),
+(7,2), (7,4), (8,1), (8,6), (9,3), (9,10),
+(10,6), (10,9);
+GO
+
+-- Клиенты
+SET IDENTITY_INSERT [dbo].[Client] ON;
+INSERT INTO [dbo].[Client] ([Id], [Name], [Phone], [Email]) VALUES
+(1, 'Иванов Иван Иванович', '+7(999)111-22-33', 'ivanov@mail.ru'),
+(2, 'Петров Петр Петрович', '+7(999)222-33-44', 'petrov@yandex.ru'),
+(3, 'Сидорова Анна Сергеевна', '+7(999)333-44-55', 'sidorova@gmail.com'),
+(4, 'Козлов Дмитрий Александрович', '+7(999)444-55-66', 'kozlov@mail.ru'),
+(5, 'Новикова Елена Владимировна', '+7(999)555-66-77', 'novikova@yandex.ru');
+SET IDENTITY_INSERT [dbo].[Client] OFF;
+GO
+
+-- Заказы (даты в формате YYYYMMDD)
+INSERT INTO [dbo].[Order] ([ClientId], [BookId], [OrderDate], [TicketsCount], [Status]) VALUES
+(1, 1, '20240115', 2, 'Оплачен'),
+(1, 4, '20240120', 1, 'Новый'),
+(2, 2, '20240118', 1, 'Оплачен'),
+(3, 5, '20240122', 1, 'Новый'),
+(4, 3, '20240110', 1, 'Отменен'),
+(5, 8, '20240125', 2, 'Новый'),
+(2, 6, '20240119', 1, 'Оплачен'),
+(3, 9, '20240121', 1, 'Новый'),
+(1, 10, '20240116', 3, 'Оплачен'),
+(4, 7, '20240112', 1, 'Отменен');
+GO
+
+-- Роли
+SET IDENTITY_INSERT [dbo].[Roles] ON;
+INSERT INTO [dbo].[Roles] ([Id], [Name]) VALUES
+(1, 'Admin'),
+(2, 'Manager'),
+(3, 'Storekeeper'),
+(4, 'Guest');
+SET IDENTITY_INSERT [dbo].[Roles] OFF;
+GO
+
+-- Пользователи (пароль admin = 164)
+SET IDENTITY_INSERT [dbo].[Users] ON;
+INSERT INTO [dbo].[Users] ([Id], [Login], [Password], [RoleId]) VALUES
+(1, 'admin', '164', 1);
+SET IDENTITY_INSERT [dbo].[Users] OFF;
+GO
+
+PRINT 'База данных BookStore успешно создана и заполнена.';
+GO

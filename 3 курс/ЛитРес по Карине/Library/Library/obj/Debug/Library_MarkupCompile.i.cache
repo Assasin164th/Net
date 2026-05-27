@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\obj\Debug\
 Library
 none
 false
 DEBUG;TRACE
-Z:\Маклецов Никита Сергеевич\3 курс\ЛитРес по Карине\Library\Library\App.xaml
-31990002609
+C:\Users\Last Guardian\Desktop\Net\3 курс\ЛитРес по Карине\Library\Library\App.xaml
+8366579849
 2-1957146511
-22-1584575961
-19-605811238
-BookEditWindow.xaml;LoginWindow.xaml;MainWindow.xaml;
+26-764456154
+19-2130310116
+AddBookWindow.xaml;AddPublisherWindow.xaml;BookEditWindow.xaml;EditPublisherWindow.xaml;LoginWindow.xaml;MainWindow.xaml;PublisherEditWindow.xaml;PublishersWindow.xaml;
 
 True
 

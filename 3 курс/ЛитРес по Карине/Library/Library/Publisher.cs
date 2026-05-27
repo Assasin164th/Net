@@ -24,6 +24,7 @@ namespace Library
         public string Name { get; set; }
         public int Rating { get; set; }
         public int CityId { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book> Book { get; set; }

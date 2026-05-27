@@ -1,112 +1,202 @@
 ﻿using Library.classes;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.ComponentModel;
 
 namespace Library
 {
-    public partial class BookEditWindow : Window
+    public partial class BookEditWindow : Window, INotifyPropertyChanged
     {
         public Book CurrentBook { get; set; }
+        public string WindowName => CurrentBook.Id == 0 ? "Новая книга" : "Редактирование книги";
 
-        public string WindowName
+        private string _coverImagePath;
+        public string CoverImagePath
+        {
+            get => _coverImagePath;
+            set
+            {
+                _coverImagePath = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CoverImagePath)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CoverImageSource)));
+            }
+        }
+
+        public BitmapImage CoverImageSource
         {
             get
             {
-                return CurrentBook.Id == 0 ? "Новая книга" : "Редактировагие книги";
+                if (string.IsNullOrEmpty(CoverImagePath)) return null;
+                try
+                {
+                    return new BitmapImage(new Uri(CoverImagePath));
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
-        private bool isNew;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public BookEditWindow(Book book)
         {
             InitializeComponent();
             DataContext = this;
-            CurrentBook = book;
+            CurrentBook = book ?? new Book();
 
-            using (var context = new BookStoreEntities())
-            {
-                cmbPublisher = context.Publisher.ToList();
-            }
             LoadComboBoxes();
+            SetSelectedValues();
+            UpdateCoverPreview();
         }
-
-        
 
         private void LoadComboBoxes()
         {
-            cmbGenre.ItemsSource = AppConnect.context.Genre.OrderBy(c => c.Name).ToList();
-            cmbPublisher.ItemsSource = AppConnect.context.Publisher.OrderBy(m => m.Name).ToList();
-
-            if (CurrentBook.IsAvailable)
-            {
-                chkIsAvailable.IsChecked = true;
-            }
+            cmbGenre.ItemsSource = AppConnect.context.Genre.OrderBy(g => g.Name).ToList();
+            cmbPublisher.ItemsSource = AppConnect.context.Publisher.OrderBy(p => p.Name).ToList();
         }
 
-        private void Invalidate(string ComponentName = "ProductList")
+        private void SetSelectedValues()
         {
-            if (PropertyChanged != null)
-                PropertyChanged(
-                    this,
-                    new PropertyChangedEventArgs(ComponentName));
+            if (CurrentBook.PublisherId > 0)
+                cmbPublisher.SelectedValue = CurrentBook.PublisherId;
+
+            if (CurrentBook.Id != 0 && CurrentBook.Genre != null && CurrentBook.Genre.Any())
+            {
+                var firstGenre = CurrentBook.Genre.FirstOrDefault();
+                if (firstGenre != null)
+                    cmbGenre.SelectedValue = firstGenre.Id;
+            }
+
+            if (CurrentBook.Id == 0 && !CurrentBook.IsAvailable)
+                CurrentBook.IsAvailable = true;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private void UpdateCoverPreview()
+        {
+            if (!string.IsNullOrEmpty(CurrentBook.CoverImage))
+                CoverImagePath = CurrentBook.CoverImage;
+            else
+                CoverImagePath = null;
+        }
+
+        private void BtnSelectCover_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Filter = "Изображения|*.jpg;*.jpeg;*.png;*.bmp",
+                Title = "Выберите обложку книги"
+            };
+            if (dialog.ShowDialog() == true)
+                CoverImagePath = dialog.FileName;
+        }
+
+        private bool ValidateFields()
+        {
+            if (string.IsNullOrWhiteSpace(CurrentBook.Name))
+            {
+                MessageBox.Show("Введите название книги.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(CurrentBook.Author))
+            {
+                MessageBox.Show("Введите автора.");
+                return false;
+            }
+            if (CurrentBook.Price < 0)
+            {
+                MessageBox.Show("Цена не может быть отрицательной.");
+                return false;
+            }
+            if (CurrentBook.StockCount < 0)
+            {
+                MessageBox.Show("Количество на складе не может быть отрицательным.");
+                return false;
+            }
+            if (cmbGenre.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите жанр.");
+                return false;
+            }
+            if (cmbPublisher.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите издательство.");
+                return false;
+            }
+            return true;
+        }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new BookStoreEntities())
+            txtName.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+            txtAuthor.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+            txtPrice.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+            txtStockCount.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+
+            if (!ValidateFields())
+                return;
+
+            var selectedGenre = (Genre)cmbGenre.SelectedItem;
+            var selectedPublisher = (Publisher)cmbPublisher.SelectedItem;
+            CurrentBook.PublisherId = selectedPublisher.Id;
+
+            if (!string.IsNullOrEmpty(CoverImagePath) && CoverImagePath != CurrentBook.CoverImage)
             {
-                // Вся работа с БД должна быть завёрнута в исключения
+                string fileName = System.IO.Path.GetFileName(CoverImagePath);
+                string destPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Covers", fileName);
                 try
                 {
-                    Book book = null;
-                    if (CurrentBook.Id != 0)
-                        book = context.Book.Find(CurrentBook.Id);
-                    else
-                        book = new Book();
-
-                    if (book != null)
-                    {
-                        // Добавляем проверки
-                        book.Name = CurrentBook.Name;
-                        book.Author = CurrentBook.Author;
-                        book.Publisher = CurrentBook.Publisher;
-                        book.Price = CurrentBook.Price;
-                        book.IsAvailable = CurrentBook.IsAvailable;
-                        if (book.Id == 0)
-                            context.Book.Add(book);
-                        else
-                            context.Book.AddOrUpdate(book);
-
-                        if (context.SaveChanges() > 0)
-                        {
-                            DialogResult = true;
-                        }
-
-                    }
+                    System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destPath));
+                    System.IO.File.Copy(CoverImagePath, destPath, true);
+                    CurrentBook.CoverImage = "Covers/" + fileName;
                 }
                 catch (Exception ex)
                 {
-                    if (ex.InnerException != null)
-                        MessageBox.Show(ex.InnerException.Message);
-                    else MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Ошибка копирования: {ex.Message}");
+                    return;
                 }
+            }
+            else if (CurrentBook.CoverImage != null && string.IsNullOrEmpty(CoverImagePath))
+                CurrentBook.CoverImage = null;
+
+            try
+            {
+                if (CurrentBook.Id == 0)
+                {
+                    CurrentBook.Genre = new System.Collections.Generic.HashSet<Genre>();
+                    CurrentBook.Genre.Add(selectedGenre);
+                    AppConnect.context.Book.Add(CurrentBook);
+                }
+                else
+                {
+                    var existing = AppConnect.context.Book.Include("Genre").FirstOrDefault(b => b.Id == CurrentBook.Id);
+                    if (existing != null)
+                    {
+                        existing.Name = CurrentBook.Name;
+                        existing.Author = CurrentBook.Author;
+                        existing.Price = CurrentBook.Price;
+                        existing.StockCount = CurrentBook.StockCount;
+                        existing.IsAvailable = CurrentBook.IsAvailable;
+                        existing.PublisherId = CurrentBook.PublisherId;
+                        existing.CoverImage = CurrentBook.CoverImage;
+
+                        existing.Genre.Clear();
+                        existing.Genre.Add(selectedGenre);
+                    }
+                }
+                AppConnect.context.SaveChanges();
+                DialogResult = true;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения: {ex.InnerException?.Message ?? ex.Message}");
             }
         }
 

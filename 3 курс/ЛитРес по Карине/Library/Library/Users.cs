@@ -14,10 +14,10 @@ namespace Library
     
     public partial class Users
     {
-        public int userID { get; set; }
-        public int roleID { get; set; }
-        public string pass { get; set; }
-        public string login { get; set; }
+        public int Id { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public int RoleId { get; set; }
     
         public virtual Roles Roles { get; set; }
     }

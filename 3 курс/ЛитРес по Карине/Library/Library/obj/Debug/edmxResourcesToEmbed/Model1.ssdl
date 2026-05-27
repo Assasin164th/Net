@@ -65,32 +65,23 @@
     <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Rating" Type="int" Nullable="false" />
     <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
-      <PropertyRef Name="roleID" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="roleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nchar" MaxLength="50" Nullable="false" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
-      <PropertyRef Name="userID" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="roleID" Type="int" Nullable="false" />
-    <Property Name="pass" Type="nchar" MaxLength="10" Nullable="false" />
-    <Property Name="login" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_Book_Publisher">
     <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
@@ -169,14 +160,16 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Users_Roles">
-    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Users" Type="Self.Users" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Roles">
-        <PropertyRef Name="roleID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Users">
-        <PropertyRef Name="roleID" />
+        <PropertyRef Name="RoleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -189,7 +182,6 @@
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Publisher" EntityType="Self.Publisher" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Book_Publisher" Association="Self.FK_Book_Publisher">
       <End Role="Publisher" EntitySet="Publisher" />
